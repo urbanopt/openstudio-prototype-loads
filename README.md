@@ -22,6 +22,8 @@ a local (or remote) instance of the OpenStudio Analysis Framework (aka OpenStudi
 * Open the `pat-project` in OpenStudio's Parametric Analysis Tool (PAT). The initial data was created with PAT Version 3.0.1.
 * Run the simulations in PAT.
 * After the simulations complete, click on the Results cloud to download all the results locally. This is required to allow for post processing the results.
+* Run `python post-process.py` to parse the results, update file names and info with building types, and save the results to the loads folder.
+
 ### Updating Measures
 
 Updating measures requires the user to update the PAT measures. Note that the OpenStudio DOE Prototype Building and
