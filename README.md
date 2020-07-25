@@ -13,6 +13,8 @@ measures, weather files), so make sure to update the correct files.
 * loads - This is the location of the post processed loads that can be imported into Modelica.
 * post-process.py - Script that post processes the results of the PAT simulations and places them in the loads folder. 
 
+** These data have not been validated! Use caution and please inform us if there is something amiss **
+
 ## Instructions
 
 The list below are the steps to run the OpenStudio simulations and post process the results. The analysis requires running 
@@ -20,9 +22,12 @@ a local (or remote) instance of the OpenStudio Analysis Framework (aka OpenStudi
 
 * Start an instance of OpenStudio Analysis Framework see [section below](#starting-openstudio-analysis-framework).
 * Open the `pat-project` in OpenStudio's Parametric Analysis Tool (PAT). The initial data was created with PAT Version 3.0.1.
-* Run the simulations in PAT.
-* After the simulations complete, click on the Results cloud to download all the results locally. This is required to allow for post processing the results.
-* Run `python post-process.py` to parse the results, update file names and info with building types, and save the results to the loads folder.
+* Run the simulations in PAT. Note that PAT can be closed after the simulations start but make sure to save on exit to update the pat.json with the server URL.
+* Run `python post-process.py` this will:
+    * Download the data_point.zip for each of the completed simulation
+    * Extract the zip file
+    * Parse the results.json and update the modelica.mos with the building type, climate zone, and vintage
+    * Save the post processed modelica.mos file into the loads folder.
 
 ### Updating Measures
 
@@ -66,6 +71,9 @@ OS_SERVER_NUMBER_OF_WORKERS=n docker-compose up
 ```bash
 docker-compose scale worker=n
 ```
+
+## Technical Implementation
+
 
 
 # References

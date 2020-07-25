@@ -320,6 +320,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       f << "#  Building Type: {{BUILDINGTYPE}}\n"
       f << "#  Climate Zone: {{CLIMATEZONE}}\n"
       f << "#  Vintage: {{VINTAGE}}\n"
+      f << "#  Simulation ID (for debugging): {{SIMID}}\n"
       f << "\n"
       f << "#First column: Seconds in the year (loads are hourly)\n"
       f << "#Second column: cooling loads in Watts (as negative numbers).\n"

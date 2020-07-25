@@ -1,0 +1,15 @@
+#1
+#Heating and Cooling Model loads from OpenStudio Prototype Buildings
+#  Building Type: RetailStandalone
+#  Climate Zone: 2A
+#  Vintage: DOE_Ref_Pre-1980
+
+#First column: Seconds in the year (loads are hourly)
+#Second column: cooling loads in Watts (as negative numbers).
+#Third column: space heating loads in Watts
+#Fourth column: water heating in Watts
+
+#Peak space cooling load = 0 Watts
+#Peak space cooling load = 0 Watts
+#Peak water heating load = 0 Watts
+double tab1(8760,4)
