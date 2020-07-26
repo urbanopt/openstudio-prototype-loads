@@ -6,14 +6,32 @@ locations that can be exported to CSV or to Modelica through a .mos file.
 The structure of this repository is as follows. Note that several of the files are located in multiple places (e.g.,
 measures, weather files), so make sure to update the correct files.
 
-* measures - The main measures for the analysis. Update these measures and then have PAT 'check for updates'
-* pat-project - The PAT project that contains the setup to run the full factorial of Prototype buildings.
-* seeds - These models get replaced but a seed model is required for PAT.
-* weather - These weather files get replaced by the OpenStudio Prototype measure; however, PAT requires a starting weather file.
-* loads - This is the location of the post processed loads that can be imported into Modelica.
-* post-process.py - Script that post processes the results of the PAT simulations and places them in the loads folder. 
+* `measures` - The main measures for the analysis. Update these measures and then have PAT 'check for updates'
+* `pat-project` - The PAT project that contains the setup to run the full factorial of Prototype buildings.
+* `seeds` - These models get replaced but a seed model is required for PAT.
+* `weather` - These weather files get replaced by the OpenStudio Prototype measure; however, PAT requires a starting weather file.
+* `loads` - This is the location of the post processed loads that can be imported into Modelica.
+* `post-process.py` - Script that post processes the results of the PAT simulations and places them in the loads folder. 
 
 ** These data have not been validated! Use caution and please inform us if there is something amiss **
+
+## Technical Details
+
+The existence of the loads required to meet setpoint for each prototype building allows for third party tools to
+integrate custom HVAC and controls logic to meet the setpoint solely based on the building load. There are 
+limitations to this methodology including the following: 
+  * The loads assume that the building load was met for each timestep. This limits the ability to store unmet loads 
+  for the following timestep. 
+  * The loads are only sensible loads.
+  * The values are the sum of all the thermal zones. Some zones can be in heating mode and others in cooling mode;
+  however, only the total load for the whole building is reported.
+  * The Retail Stand Alone model did not correctly export loads.
+  * The water heating loads are not being reported at the moment.
+
+The OpenStudio/EnergyPlus loads were exported using the `ZonePredictedSensibleLoadtoSetpointHeatTransferRate`
+reporting variable for each thermal zone. The value reported in the mos file is the sum of all zone loads. If the
+sum was positive, then it was considered a heating timestep and if the value was negative it was assumed to be a 
+cooling timestep. Simultaneous heating and cooling was not calculated as previously mentioned.
 
 ## Instructions
 
@@ -32,12 +50,12 @@ a local (or remote) instance of the OpenStudio Analysis Framework (aka OpenStudi
 ### Updating Measures
 
 Updating measures requires the user to update the PAT measures. Note that the OpenStudio DOE Prototype Building and
-the OpenStudio Results are downloaded from the BCL and do not have a version in the /measures folder.
+the OpenStudio Results are downloaded from the BCL and do not have a version in the `/measures` folder.
  
-* Update the /measure measure of interest (e.g., export_modelica_loads)
+* Update the measure.rb file in the `/measures `folder of interest (e.g., export_modelica_loads)
 * Launch PAT
-* Open this repos PAT project (pat-project)
-* Set the measure working directory in `Window -> Set MyMeasures Directory` to this repos /measures path. (Make sure that you do not assign the PAT projects measures directory.)
+* Open this repos PAT project (`pat-project`)
+* Set the measure working directory in `Window -> Set MyMeasures Directory` to this repos `/measures` path. (Make sure that you do not assign the PAT projects measures directory.)
 * Click on the "Check for Updates" in PATs measure list 
 
 ## Starting OpenStudio Analysis Framework
@@ -71,11 +89,6 @@ OS_SERVER_NUMBER_OF_WORKERS=n docker-compose up
 ```bash
 docker-compose scale worker=n
 ```
-
-## Technical Implementation
-
-
-
 # References
 
 * [Brian L. Ball, Nicholas Long, Katherine Fleming, Chris Balbach & Phylroy Lopez (2020) An open source analysis framework for large-scale building energy modeling, Journal of Building Performance Simulation, 13:5, 487-500, DOI: 10.1080/19401493.2020.1778788](https://www.tandfonline.com/doi/full/10.1080/19401493.2020.1778788)
