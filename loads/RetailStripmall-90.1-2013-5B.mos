@@ -10,7 +10,7 @@
 #Fourth column: water heating in Watts
 
 #Peak space cooling load = -86323.84999999999 Watts
-#Peak space cooling load = 113574.36 Watts
+#Peak space heating load = 113574.36 Watts
 #Peak water heating load = 0 Watts
 double tab1(8760,4)
 0;0;4318.82;0.0

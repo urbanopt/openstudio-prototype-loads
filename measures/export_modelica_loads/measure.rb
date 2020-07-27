@@ -328,7 +328,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       f << "#Fourth column: water heating in Watts\n"
       f << "\n"
       f << "#Peak space cooling load = #{peak_cooling} Watts\n"
-      f << "#Peak space cooling load = #{peak_heating} Watts\n"
+      f << "#Peak space heating load = #{peak_heating} Watts\n"
       f << "#Peak water heating load = #{peak_water_heating} Watts\n"
       f << "double tab1(8760,4)\n"
       modelica_data.each_with_index do |row, index|
