@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>set_run_period</name>
   <uid>7a84292a-3975-4ab3-9284-6edabcbe750b</uid>
-  <version_id>39e6c0c4-da3f-48c1-81a1-80980d5c142a</version_id>
-  <version_modified>20200724T143642Z</version_modified>
+  <version_id>4c6952ed-e10d-4971-bf54-0b4348324bf1</version_id>
+  <version_modified>20200728T185505Z</version_modified>
   <xml_checksum>2AF3A68E</xml_checksum>
   <class_name>SetRunPeriod</class_name>
   <display_name>SetRunPeriod</display_name>

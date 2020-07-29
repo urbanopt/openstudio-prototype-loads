@@ -3,6 +3,7 @@
 #  Building Type: Warehouse
 #  Climate Zone: 7A
 #  Vintage: 90.1-2004
+#  Simulation ID (for debugging): 7cbdd61d-ff38-40bb-9dae-8591d7ed1650
 
 #First column: Seconds in the year (loads are hourly)
 #Second column: cooling loads in Watts (as negative numbers).

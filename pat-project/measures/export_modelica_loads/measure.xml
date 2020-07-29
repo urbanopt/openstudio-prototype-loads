@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>export_modelica_loads</name>
   <uid>7051db01-2e55-4223-b5b5-fee615b68dd0</uid>
-  <version_id>4adb4e6b-bdc7-4929-a400-bf90a7256b52</version_id>
-  <version_modified>20200724T143642Z</version_modified>
+  <version_id>06ebda59-0057-4f9e-9a13-c2971a907f81</version_id>
+  <version_modified>20200728T194156Z</version_modified>
   <xml_checksum>2C8A3EEF</xml_checksum>
   <class_name>ExportModelicaLoads</class_name>
   <display_name>Export Modelica Loads</display_name>
@@ -86,7 +86,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>43899C5C</checksum>
+      <checksum>71F5C877</checksum>
     </file>
   </files>
 </measure>

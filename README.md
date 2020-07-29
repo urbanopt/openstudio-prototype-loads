@@ -23,8 +23,8 @@ limitations to this methodology including the following:
   * The loads assume that the building load was met for each timestep. This limits the ability to store unmet loads 
   for the following timestep. 
   * The loads are only sensible loads.
-  * The values are the sum of all the thermal zones. Some zones can be in heating mode and others in cooling mode;
-  however, only the total load for the whole building is reported.
+  * The values are the sum of the cooling and heating loads individually for each zone. This allows for simultaneous
+  heating and cooling analysis.
   * The Retail Stand Alone model did not correctly export loads.
   * The water heating loads are not being reported at the moment.
 

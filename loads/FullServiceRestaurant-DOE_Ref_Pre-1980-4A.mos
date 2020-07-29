@@ -3,6 +3,7 @@
 #  Building Type: FullServiceRestaurant
 #  Climate Zone: 4A
 #  Vintage: DOE_Ref_Pre-1980
+#  Simulation ID (for debugging): e199c4c2-52ba-4ba3-94e9-d071da34f245
 
 #First column: Seconds in the year (loads are hourly)
 #Second column: cooling loads in Watts (as negative numbers).

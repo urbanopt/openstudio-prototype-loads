@@ -3,6 +3,7 @@
 #  Building Type: SmallOffice
 #  Climate Zone: 3A
 #  Vintage: 90.1-2007
+#  Simulation ID (for debugging): 1811f09b-c826-48b7-834f-600edd42e114
 
 #First column: Seconds in the year (loads are hourly)
 #Second column: cooling loads in Watts (as negative numbers).
@@ -7133,7 +7134,7 @@ double tab1(8760,4)
 25621200;-1584.263;0;0.0
 25624800;-2155.035;0;0.0
 25628400;-2199.397;0;0.0
-25632000;-125.2768;0;0.0
+25632000;-142.587;17.3102;0.0
 25635600;0;0;0.0
 25639200;0;0;0.0
 25642800;0;0;0.0

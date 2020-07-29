@@ -154,7 +154,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     log "Finished extracting #{variable_name}"
   end
 
-  def create_new_variable_sum(data, new_var_name, include_str)
+  def create_new_variable_sum(data, new_var_name, include_str, options=nil)
     var_info = {
         name: new_var_name,
         var_indexes: []
@@ -174,7 +174,14 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
         # sum the values
         sum = 0
         var_info[:var_indexes].each do |var|
-          sum += row[var].to_f
+          temp_v = row[var].to_f
+          if options.nil?
+            sum += temp_v
+          elsif options[:positive_only] && temp_v > 0
+            sum += temp_v
+          elsif options[:negative_only] && temp_v < 0
+            sum += temp_v
+          end
         end
         data[index] << sum
       end
@@ -267,6 +274,8 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
 
     # sum up a couple of the columns and create a new columns
     create_new_variable_sum(rows, 'TotalSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate')
+    create_new_variable_sum(rows, 'TotalCoolingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', negative_only: true)
+    create_new_variable_sum(rows, 'TotalHeatingSensibleLoad', 'ZonePredictedSensibleLoadtoSetpointHeatTransferRate', positive_only: true)
     create_new_variable_sum(rows, 'TotalWaterHeating', 'WaterHeaterHeatingRate')
 
     # convert this to CSV object
@@ -279,37 +288,31 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     # covert the row data into the format needed by modelica
     modelica_data = [['seconds', 'cooling', 'heating', 'waterheating']]
     seconds_index = nil
-    total_sensible_index = nil
     total_water_heating_index = nil
+    total_cooling_sensible_index = nil
+    total_heating_sensible_index = nil
     peak_cooling = 0
     peak_heating = 0
     peak_water_heating = 0
     rows.each_with_index do |row, index|
       if index.zero?
         seconds_index = row.index('SecondsFromStart')
-        total_sensible_index = row.index('TotalSensibleLoad')
+        total_cooling_sensible_index = row.index('TotalCoolingSensibleLoad')
+        total_heating_sensible_index = row.index('TotalHeatingSensibleLoad')
         total_water_heating_index = row.index('TotalWaterHeating')
       else
-        lcl_heat = 0
-        lcl_cool = 0
-        if row[total_sensible_index] > 0
-          lcl_heat = row[total_sensible_index]
-        elsif row[total_sensible_index] < 0
-          lcl_cool = row[total_sensible_index]
-        end
-
         new_data = [
           row[seconds_index],
-          lcl_cool,
-          lcl_heat,
+          row[total_cooling_sensible_index],
+          row[total_heating_sensible_index],
           row[total_water_heating_index]
         ]
 
         modelica_data << new_data
 
         # store the peaks
-        peak_cooling = lcl_cool if lcl_cool < peak_cooling
-        peak_heating = lcl_heat if lcl_heat > peak_heating
+        peak_cooling = row[total_cooling_sensible_index] if row[total_cooling_sensible_index] < peak_cooling
+        peak_heating = row[total_heating_sensible_index] if row[total_heating_sensible_index] > peak_heating
         peak_water_heating = row[total_water_heating_index] if row[total_water_heating_index] > peak_water_heating
       end
     end
@@ -320,6 +323,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       f << "#  Building Type: {{BUILDINGTYPE}}\n"
       f << "#  Climate Zone: {{CLIMATEZONE}}\n"
       f << "#  Vintage: {{VINTAGE}}\n"
+      f << "#  Simulation ID (for debugging): {{SIMID}}\n"
       f << "\n"
       f << "#First column: Seconds in the year (loads are hourly)\n"
       f << "#Second column: cooling loads in Watts (as negative numbers).\n"
@@ -327,7 +331,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       f << "#Fourth column: water heating in Watts\n"
       f << "\n"
       f << "#Peak space cooling load = #{peak_cooling} Watts\n"
-      f << "#Peak space cooling load = #{peak_heating} Watts\n"
+      f << "#Peak space heating load = #{peak_heating} Watts\n"
       f << "#Peak water heating load = #{peak_water_heating} Watts\n"
       f << "double tab1(8760,4)\n"
       modelica_data.each_with_index do |row, index|

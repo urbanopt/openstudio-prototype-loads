@@ -3,6 +3,7 @@
 #  Building Type: QuickServiceRestaurant
 #  Climate Zone: 4C
 #  Vintage: 90.1-2013
+#  Simulation ID (for debugging): 9bd18ccb-dc73-4ba7-9a4b-4a4df0c332c8
 
 #First column: Seconds in the year (loads are hourly)
 #Second column: cooling loads in Watts (as negative numbers).
