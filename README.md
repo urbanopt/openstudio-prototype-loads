@@ -24,8 +24,11 @@ limitations to this methodology including the following:
   for the following timestep. 
   * The loads are only sensible loads.
   * The values are the sum of the cooling and heating loads individually for each zone. This allows for simultaneous
-  heating and cooling analysis.
+  heating and cooling analysis. That is the values in the load profiles may have heating and cooling loads reported
+  for a single timestep as part of the building was in heating mode while the other part was in cooling mode.
   * The Retail Stand Alone model did not correctly export loads.
+  * The Highrise Apartment models with the Pre-1980 vintage for climate zones 1A, 2A, and 2B did not run correctly, 
+  thus are not reported.
   * The water heating loads are not being reported at the moment.
 
 The OpenStudio/EnergyPlus loads were exported using the `ZonePredictedSensibleLoadtoSetpointHeatTransferRate`
