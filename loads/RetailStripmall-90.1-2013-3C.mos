@@ -4,6 +4,7 @@
 #  Climate Zone: 3C
 #  Vintage: 90.1-2013
 #  Simulation ID (for debugging): 20b5b4f2-e133-4dcc-861d-bc84ccd4b4dd
+#  URL: https://github.com/urbanopt/openstudio-prototype-loads
 
 #First column: Seconds in the year (loads are hourly)
 #Second column: cooling loads in Watts (as negative numbers).

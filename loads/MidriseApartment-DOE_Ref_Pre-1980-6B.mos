@@ -4,6 +4,7 @@
 #  Climate Zone: 6B
 #  Vintage: DOE_Ref_Pre-1980
 #  Simulation ID (for debugging): f3350a73-74ee-416f-b9b9-ece7e51b3526
+#  URL: https://github.com/urbanopt/openstudio-prototype-loads
 
 #First column: Seconds in the year (loads are hourly)
 #Second column: cooling loads in Watts (as negative numbers).

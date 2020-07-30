@@ -324,6 +324,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       f << "#  Climate Zone: {{CLIMATEZONE}}\n"
       f << "#  Vintage: {{VINTAGE}}\n"
       f << "#  Simulation ID (for debugging): {{SIMID}}\n"
+      f << "#  URL: https://github.com/urbanopt/openstudio-prototype-loads\n"
       f << "\n"
       f << "#First column: Seconds in the year (loads are hourly)\n"
       f << "#Second column: cooling loads in Watts (as negative numbers).\n"
