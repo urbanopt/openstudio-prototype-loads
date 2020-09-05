@@ -74,7 +74,7 @@ git clone https://github.com/NREL/OpenStudio-server.git
 
 ```bash
 cd <root-of-openstudio-server-checkout>
-docker-compose build
+docker-compose build --build-arg OPENSTUDIO_VERSION=develop
 ```
 
 * Launch the containers (include number of workers if planning on scaling)
