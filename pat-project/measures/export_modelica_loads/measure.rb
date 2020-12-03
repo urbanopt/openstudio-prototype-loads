@@ -55,7 +55,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     puts "#{Time.now}: #{str}"
   end
 
-  def arguments(model)
+  def arguments(_model)
     args = OpenStudio::Measure::OSArgumentVector.new
 
     # this measure does not require any user arguments, return an empty list
@@ -183,7 +183,9 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
             sum += temp_v
           end
         end
-        data[index] << sum
+
+        # Also round the data here, because we don't need 10 decimals
+        data[index] << sum.round(1)
       end
     end
   end
@@ -324,6 +326,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
       f << "#  Climate Zone: {{CLIMATEZONE}}\n"
       f << "#  Vintage: {{VINTAGE}}\n"
       f << "#  Simulation ID (for debugging): {{SIMID}}\n"
+      f << "#  URL: https://github.com/urbanopt/openstudio-prototype-loads\n"
       f << "\n"
       f << "#First column: Seconds in the year (loads are hourly)\n"
       f << "#Second column: cooling loads in Watts (as negative numbers).\n"
