@@ -36,6 +36,11 @@ reporting variable for each thermal zone. The value reported in the mos file is 
 sum was positive, then it was considered a heating timestep and if the value was negative it was assumed to be a 
 cooling timestep. Simultaneous heating and cooling was not calculated as previously mentioned.
 
+The result is a full factorial of building type, climage zone, and code/standard template. The image below shows
+the parallel coordinate plot of all the simulations.
+
+![Parallel Coordinate Plot](parcorplot.png)
+
 ## Instructions
 
 The list below are the steps to run the OpenStudio simulations and post process the results. The analysis requires running 
