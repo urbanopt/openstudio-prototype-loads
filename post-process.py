@@ -89,8 +89,11 @@ for sim in sims['data']:
         # check if the zip has been extracted by looking for the datapoint directory
         unzip_path = os.path.join(os.path.dirname(zipfilename), 'datapoint')
         if not os.path.exists(unzip_path):
-            with zipfile.ZipFile(zipfilename, 'r') as zip_ref:
-                zip_ref.extractall(unzip_path)
+            try:
+                with zipfile.ZipFile(zipfilename, 'r') as zip_ref:
+                    zip_ref.extractall(unzip_path)
+            except zipfile.BadZipFile:
+                raise Exception(f"Could not process ZipFile: {unzip_path}")
 
         # now process the directory to cleanup the mos file
         process_directory(sim['_id'], os.path.dirname(zipfilename))

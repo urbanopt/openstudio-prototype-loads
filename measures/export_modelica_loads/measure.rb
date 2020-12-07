@@ -55,7 +55,7 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
     puts "#{Time.now}: #{str}"
   end
 
-  def arguments(model)
+  def arguments(_model)
     args = OpenStudio::Measure::OSArgumentVector.new
 
     # this measure does not require any user arguments, return an empty list
@@ -183,7 +183,9 @@ class ExportModelicaLoads < OpenStudio::Measure::ReportingMeasure
             sum += temp_v
           end
         end
-        data[index] << sum
+
+        # Also round the data here, because we don't need 10 decimals
+        data[index] << sum.round(1)
       end
     end
   end

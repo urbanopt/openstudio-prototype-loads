@@ -36,13 +36,18 @@ reporting variable for each thermal zone. The value reported in the mos file is 
 sum was positive, then it was considered a heating timestep and if the value was negative it was assumed to be a 
 cooling timestep. Simultaneous heating and cooling was not calculated as previously mentioned.
 
+The result is a full factorial of building type, climage zone, and code/standard template. The image below shows
+the parallel coordinate plot of all the simulations.
+
+![Parallel Coordinate Plot](parcorplot.png)
+
 ## Instructions
 
 The list below are the steps to run the OpenStudio simulations and post process the results. The analysis requires running 
 a local (or remote) instance of the OpenStudio Analysis Framework (aka OpenStudio Server). 
 
 * Start an instance of OpenStudio Analysis Framework see [section below](#starting-openstudio-analysis-framework).
-* Open the `pat-project` in OpenStudio's Parametric Analysis Tool (PAT). The initial data was created with PAT Version 3.0.1.
+* Open the `pat-project` in OpenStudio's Parametric Analysis Tool (PAT). The initial data was created with PAT Version 3.1. (It is recommended to use this as the local server does not start automatically in this version.)
 * Run the simulations in PAT. Note that PAT can be closed after the simulations start but make sure to save on exit to update the pat.json with the server URL.
 * Run `python post-process.py` this will:
     * Download the data_point.zip for each of the completed simulation
@@ -59,39 +64,29 @@ the OpenStudio Results are downloaded from the BCL and do not have a version in 
 * Launch PAT
 * Open this repos PAT project (`pat-project`)
 * Set the measure working directory in `Window -> Set MyMeasures Directory` to this repos `/measures` path. (Make sure that you do not assign the PAT projects measures directory.)
-* Click on the "Check for Updates" in PATs measure list 
+* Click on the "Check for Updates" in PAT's measure list 
 
 ## Starting OpenStudio Analysis Framework
 
+It is best to use the OpenStudio Server version that is this repo's docker-compose file (OpenStudio Server 3.1.0). 
+
 * Install [Docker CE](https://docs.docker.com/install/)
-* Clone [OpenStudio Server](https://github.com/nrel/openstudio-server). This repo was created with the develop branch which was on Version 3.0.1.
 
+* Create the data volumes
 ```bash
-git clone https://github.com/NREL/OpenStudio-server.git
+docker volume create --name=osdata
+docker volume create --name=dbdata
 ```
 
-* Build the docker containers
-
-```bash
-cd <root-of-openstudio-server-checkout>
-docker-compose build --build-arg OPENSTUDIO_VERSION=develop
-```
-
-* Launch the containers (include number of workers if planning on scaling)
+* Launch the docker stack (include number of workers if planning on scaling)
 
 ```bash
 docker-compose up
+
+# scaling
+OS_SERVER_NUMBER_OF_WORKERS=n docker-compose up --scale worker=n
 ```
 
-```bash
-OS_SERVER_NUMBER_OF_WORKERS=n docker-compose up
-```
-
-* Scale the number of workers (from n above, if desired)
-
-```bash
-docker-compose scale worker=n
-```
 # References
 
 * [Brian L. Ball, Nicholas Long, Katherine Fleming, Chris Balbach & Phylroy Lopez (2020) An open source analysis framework for large-scale building energy modeling, Journal of Building Performance Simulation, 13:5, 487-500, DOI: 10.1080/19401493.2020.1778788](https://www.tandfonline.com/doi/full/10.1080/19401493.2020.1778788)
